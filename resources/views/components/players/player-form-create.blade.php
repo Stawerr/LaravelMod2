@@ -43,6 +43,28 @@
             <strong>{{ $message }}</strong>
         </span>
         @enderror
+        <label for="description">Description</label>
+        <textarea
+            id="description"
+            name="description"
+            autocomplete="description"
+            placeholder="Type your description"
+            class="form-control"
+            @error('description') is-invalid @enderror
+            required>{{ old('description') }}</textarea>
+
+        <small id="nameHelp" class="form-text text-muted">We'll never share your data with anyone else.</small>
+
+        @error('description')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+        <label for="retired">Retired</label><br>
+        <input type="radio" id="yes" name="retired" value="0">
+        <label for="yes">Yes</label>
+        <input type="radio" id="no" name="retired" value="1">
+        <label for="no">No</label>
     </div>
 
     <button type="submit" class="mt-2 mb-5 btn btn-primary">Submit</button>

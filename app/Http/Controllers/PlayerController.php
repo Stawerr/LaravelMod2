@@ -14,7 +14,7 @@ class PlayerController extends Controller
      */
     public function index()
     {
-        $players = Player::orderBy('id','asc')->paginate(15);
+        $players = Player::orderBy('id','desc')->paginate(15);
         return view('pages.players.index',['players'=>$players]);
     }
 
@@ -39,14 +39,25 @@ class PlayerController extends Controller
         $this->validate($request, [
             'name'        => 'required',
             'address'     => 'required',
+            'description'     => 'required',
+            'retired'     => 'required',
             ]);
 
         Player::create([
             'name'        => $request->name,
             'address'     => $request->address,
+            'description'     => $request->description,
+            'retired'     => $request->retired,
             ]);
 
-        return redirect('players')->with('status','Item created successfully!');
+        /* Outra forma de inserir os dados
+            $player = new Player();
+            $player->name =$request->name;
+            $player->address =$request->address;
+            $player->save();
+        */
+
+        return redirect('players')->with('status','Player created successfully!');
     }
 
     /**
@@ -68,7 +79,7 @@ class PlayerController extends Controller
      */
     public function edit(Player $player)
     {
-        //
+        return view('pages.players.edit',['player'=>$player]);
     }
 
     /**
@@ -80,7 +91,8 @@ class PlayerController extends Controller
      */
     public function update(Request $request, Player $player)
     {
-        //
+        $player->update($request->all());
+        return redirect('players')->with('status','Item edited successfully!');
     }
 
     /**

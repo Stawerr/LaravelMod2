@@ -8,6 +8,8 @@ class Player extends Model
 {
     protected $fillable = [
         'name',
-        'address'
+        'address',
+        'description',
+        'retired'
     ];
 }

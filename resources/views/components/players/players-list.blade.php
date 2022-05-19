@@ -7,6 +7,7 @@
         <th scope="col">ID</th>
         <th scope="col">Name</th>
         <th scope="col">Address</th>
+        <th scope="col">Description</th>
         <th scope="col">Retired</th>
         <th scope="col">Actions</th>
 
@@ -18,10 +19,11 @@
             <td> {{$player->id}}</td>
             <td>{{$player->name}}</td>
             <td>{{$player->address}}</td>
+            <td>{{$player->description}}</td>
             <td>@if($player->retired)<i class="bi bi-emoji-smile text-success "></i> @else <i class="bi bi-emoji-smile-upside-down text-danger"></i> @endif</td>
-            <td><button type="button" class="btn btn-success">Show</button></td>
-            <td><button type="button" class="btn btn-primary">Edit</button></td>
-            <td><button type="button" class="btn btn-danger">Delete</button></td>
+            <td><a class="btn btn-success" href="{{url('players/'.$player->id)}}">Show</a></td>
+            <td><a class="btn btn-primary" href="{{url('players/'.$player->id. '/edit')}}">Edit</a></td>
+            <td><a class="btn btn-danger">Delete</a></td>
         </tr>
     @endforeach
     </tbody>
@@ -29,4 +31,5 @@
 <div class="d-flex justify-content-center">
     {{$players->links()}}
 </div>
+
 
