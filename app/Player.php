@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Player extends Model
 {
@@ -12,4 +13,6 @@ class Player extends Model
         'description',
         'retired'
     ];
+
+    use SoftDeletes;
 }
