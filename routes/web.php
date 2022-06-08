@@ -26,7 +26,10 @@ Route::get('/players','PlayerController@index');
 Route::get('/players/create','PlayerController@create');
 Route::post('/players/','PlayerController@store');
 Route::delete('/players/destroyAll', 'PlayerController@destroyAll');
+Route::get('players/export/', 'PlayerController@export');
+Route::get('players/import/', 'PlayerController@import');
 Route::get('/players/{player}','PlayerController@show');
 Route::get('/players/{player}/edit','PlayerController@edit');
 Route::put('/players/{player}', 'PlayerController@update');
 Route::delete('/players/{player}', 'PlayerController@destroy');
+

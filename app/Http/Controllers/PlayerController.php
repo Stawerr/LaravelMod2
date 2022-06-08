@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\PlayersImport;
 use App\Player;
 use Illuminate\Http\Request;
+use App\Exports\PlayersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PlayerController extends Controller
 {
@@ -130,4 +133,15 @@ class PlayerController extends Controller
         return view('pages.players.index',['players'=>$players]);
     }
      */
+
+    public function export()
+    {
+        return Excel::download(new PlayersExport, 'players.xlsx');
+    }
+    public function import()
+    {
+        Excel::import(new PlayersImport, 'players.xlsx');
+
+        return redirect('/')->with('success', 'All good!');
+    }
 }

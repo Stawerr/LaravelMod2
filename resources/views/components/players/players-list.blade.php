@@ -5,6 +5,8 @@
     @method('DELETE')
     <td><button type="submit" class="btn btn-danger">Delete ALL</button></td>
 </form>
+<a class="btn btn-primary" href="{{url('players/export')}}">Export</a>
+<a class="btn btn-primary" href="{{url('players/import')}}">Import</a>
 
 <table class="table table-striped table-dark ">
     <thead>

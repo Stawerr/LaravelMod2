@@ -15,4 +15,5 @@ class Player extends Model
     ];
 
     use SoftDeletes;
+
 }
