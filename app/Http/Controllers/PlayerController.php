@@ -125,12 +125,13 @@ class PlayerController extends Controller
     public function update(Request $request, Player $player)
     {
         if ($request->file('image')) {
+            // Delete Old Image
+            if($player->image)
+                Storage::delete('public/' . $player->image);
             // Get Image File
             $imagePath = $request->file('image');
             // Define Image Name
             $imageName =  $player->id . '_' .  time() . '_' .  $imagePath->getClientOriginalName();
-            // Delete Old Image
-            Storage::delete('public/' . $player->image);
             // Save Image on Storage
             $path = $request->file('image')->storeAs('images/players/' . $player->id, $imageName, 'public');
             //Save Image Path
