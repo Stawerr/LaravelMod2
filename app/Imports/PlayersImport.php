@@ -4,8 +4,9 @@ namespace App\Imports;
 
 use App\Player;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class PlayersImport implements ToModel
+class PlayersImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
@@ -15,13 +16,12 @@ class PlayersImport implements ToModel
     public function model(array $row)
     {
         return new Player([
-            'ID'=>$row[0],
-            'Name'=>$row[1],
-            'Address'=>$row[2],
-            'Description'=>$row[3],
-            'Retired'=>$row[4],
-            'Created_at'=>$row[5],
-            'Updated_at'=>$row[6],
+            'name'=>$row['name'],
+            'address'=>$row['address'],
+            'description'=>$row['description'],
+            'retired'=>$row['retired'],
+            'created_at'=>$row['created_at'],
+            'updated_at'=>$row['updated_at'],
         ]);
     }
 }

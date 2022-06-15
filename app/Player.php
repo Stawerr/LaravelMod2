@@ -14,6 +14,7 @@ class Player extends Model
         'retired'
     ];
 
+
     use SoftDeletes;
 
 }

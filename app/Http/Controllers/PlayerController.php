@@ -140,7 +140,7 @@ class PlayerController extends Controller
     }
     public function import()
     {
-        Excel::import(new PlayersImport, 'players.xlsx');
+        Excel::import(new PlayersImport, request()->file('playersFile'));
 
         return redirect('/')->with('success', 'All good!');
     }
