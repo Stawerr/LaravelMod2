@@ -1,10 +1,25 @@
 
 <div class="col-4 mx-auto mt-4">
-    <h1>Add Player</h1>
-    <form method="POST" action="{{ url('players/' . $player->id) }}">
+    <h1>Edit Player</h1>
+    <form method="POST" action="{{ url('players/' . $player->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group ">
+            <label for="image">Image</label>
+            @if($player->image)
+                <img src="{{asset('storage/'.$player->image)}}" width="200px">
+            @else
+                <p>
+                    NO IMAGE
+                </p>
+            @endif
+            <input type="file"
+                   id="image"
+                   name="image"
+                   autocomplete="image"
+                   class="form-control"
+                   value="{{ $player->image }}"
+                   required>
             <label for="name">Name</label>
             <input
                 type="text"

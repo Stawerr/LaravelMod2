@@ -4,6 +4,15 @@
 <div class="col-4 mx-auto mt-4">
     <h1>Show Player</h1>
         <div class="form-group">
+            <label for="image">Image</label><p></p>
+            @if($player->image)
+                <img src="{{asset('storage/'.$player->image)}}" width="200px">
+            @else
+                <p>
+                    NO IMAGE
+                </p>
+            @endif
+            <p></p>
             <label for="name">Name</label>
             <input
                 class="form-control"

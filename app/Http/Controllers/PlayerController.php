@@ -7,6 +7,7 @@ use App\Player;
 use Illuminate\Http\Request;
 use App\Exports\PlayersExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 
 class PlayerController extends Controller
 {
@@ -56,21 +57,38 @@ class PlayerController extends Controller
             'address'     => 'required',
             'description'     => 'required',
             'retired'     => 'required',
+            'image'       => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
 
-        Player::create([
-            'name'        => $request->name,
-            'address'     => $request->address,
-            'description'     => $request->description,
-            'retired'     => $request->retired,
-            ]);
+        /*
+            Outra forma de inserir os dados
+            Player::create([
+             'name'        => $request->name,
+             'address'     => $request->address,
+             'description'     => $request->description,
+             'retired'     => $request->retired,
+             ]); */
 
-        /* Outra forma de inserir os dados
-            $player = new Player();
-            $player->name =$request->name;
-            $player->address =$request->address;
-            $player->save();
-        */
+             $player = new Player();
+             $player->name =$request->name;
+             $player->address =$request->address;
+             $player->description =$request->description;
+             $player->retired =$request->retired;
+             $player->save();
+
+        //If we have an image file, we store it, and move it in the database
+        if ($request->file('image')) {
+            // Get Image File
+            $imagePath = $request->file('image');
+            // Define Image Name
+            $imageName =  $player->id . '_' .  time() . '_' .  $imagePath->getClientOriginalName();
+            // Save Image on Storage
+            $path = $request->file('image')->storeAs('images/players/' . $player->id, $imageName, 'public');
+            //Save Image Path
+            $player->image = $path;
+        }
+        $player->save();
+
 
         return redirect('players')->with('status','Player created successfully!');
     }
@@ -106,6 +124,18 @@ class PlayerController extends Controller
      */
     public function update(Request $request, Player $player)
     {
+        if ($request->file('image')) {
+            // Get Image File
+            $imagePath = $request->file('image');
+            // Define Image Name
+            $imageName =  $player->id . '_' .  time() . '_' .  $imagePath->getClientOriginalName();
+            // Delete Old Image
+            Storage::delete('public/' . $player->image);
+            // Save Image on Storage
+            $path = $request->file('image')->storeAs('images/players/' . $player->id, $imageName, 'public');
+            //Save Image Path
+            $player->image = $path;
+        }
         $player->update($request->all());
         return redirect('players')->with('status','Item edited successfully!');
     }
@@ -118,6 +148,7 @@ class PlayerController extends Controller
      */
     public function destroy(Player $player)
     {
+        Storage::deleteDirectory('public/images/players/' . $player->id);
         $player->delete();
         return redirect('players')->with('status','Item deleted successfully!');
     }
@@ -142,6 +173,6 @@ class PlayerController extends Controller
     {
         Excel::import(new PlayersImport, request()->file('playersFile'));
 
-        return redirect('/')->with('success', 'All good!');
+        return redirect('/players')->with('success', 'All good!');
     }
 }

@@ -16,18 +16,27 @@
     <thead>
     <tr>
         <th scope="col">ID</th>
+        <th scope="col">Image</th>
         <th scope="col">Name</th>
         <th scope="col">Address</th>
         <th scope="col">Description</th>
         <th scope="col">Retired</th>
         <th scope="col">Actions</th>
-
     </tr>
     </thead>
     <tbody>
     @foreach($players as $player)
         <tr >
             <td> {{$player->id}}</td>
+            <td>
+                @if($player->image)
+                <img src="{{asset('storage/'.$player->image)}}" width="50px">
+                @else
+                    <p>
+
+                    </p>
+                @endif
+            </td>
             <td>{{$player->name}}</td>
             <td>{{$player->address}}</td>
             <td>{{$player->description}}</td>
